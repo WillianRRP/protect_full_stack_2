@@ -1,9 +1,41 @@
+import { useState } from "react";
 
 
 function App() {
+const[input, setInput] = useState('');
+const[tarefas, setTarefas] = useState([
+  'Pagar conta de luz',
+  'Pagar conta de agua',
+]);
+
+
+function handleRegister(e){
+  e.preventDefault();
+  setTarefas([...tarefas,input]);
+  setInput('')
+
+}
+
+
   return (
-    <div className="App">
-      <h1>Bem vindo ao meu projeto</h1>
+    <div>
+
+      <h1>Cadastro de Trefas</h1>
+      <form onSubmit={handleRegister}>
+        <label>Nome da tarefa:</label><br/>
+        <input 
+        placeholder="Digite uma tarefa"
+        value={input}
+        onChange={ (e) =>setInput(e.target.value) }
+        /><br/>
+        <button type="submit">Registrar</button>
+      </form>
+      <br></br>
+      <ul>
+        {tarefas.map( tarefa =>(
+          <li key={tarefa}>{tarefa}</li>
+        ))}
+      </ul>
     </div>
   );
 }
