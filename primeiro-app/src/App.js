@@ -2,31 +2,25 @@ import { useState, useEffect } from "react";
 
 function App() {
   const [input, setInput] = useState('');
-  const [tarefas, setTarefas] = useState([]);
+  const [tarefas, setTarefas] = useState([
+    'Pagar conta de luz',
+    'Pagar conta de água',
+  ]);
 
- 
-  useEffect(() => {
-    const tarefasStorage = localStorage.getItem('@tarefa');
-    if (tarefasStorage) {
-      setTarefas(JSON.parse(tarefasStorage));
-    }
-  }, []);
+useEffect(()=>{
+  const tarefaStore = localStorage.getItem('@tarefa');
+  if(tarefaStore){
+    setTarefas(JSON.parse(tarefaStore))
+  }
+},[]);
+
+useEffect(()=>{
+  localStorage.setItem('@tarefa',JSON.stringify(tarefas))
+},[tarefas])
   
-  
-  useEffect(() => {
-    if (tarefas.length > 0) {  
-      localStorage.setItem('@tarefa', JSON.stringify(tarefas));
-    }
-  }, [tarefas]);
 
   function handleRegister(e) {
     e.preventDefault();
-    
-    if (input.trim() === '') {
-      alert('Digite uma tarefa antes de adicionar!');
-      return;
-    }
-
     setTarefas([...tarefas, input]);
     setInput('');
   }
